@@ -30,7 +30,7 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
-  # Use OhMyZsh Namespace with zinit
+# Use OhMyZsh Namespace with zinit
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
 
@@ -40,6 +40,7 @@ zinit snippet OMZP::sudo
 autoload -U compinit && compinit
 
 
+# Set and source Powerlevel10k Zsh theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -47,14 +48,22 @@ autoload -U compinit && compinit
 # Aliases
 alias bat="batcat"
 alias ls="ls --color"
-
+alias ll="ls -al --color"
+alias neofetch="fastfetch"
 # END Aliases
 
 
 # Keybinds
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-
+# Run `bindkey` to view all the current keybinds and `showkey -a` for all key combination values.
+# Enables Ctrl Key movements
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[[3;5~" kill-word
+bindkey '^H' backward-kill-word
+bindkey '^C' kill-whole-line
+bindkey '^Z' undo
+bindkey '^P' history-search-backward
+bindkey '^N' history-search-forward
 # END Keybinds
 
 
@@ -72,8 +81,17 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 # END History
 
-# zstyle completion styling
+
+# Zstyle completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:ls:*' fzf-preview 'batcat --color=always $realpath'
+
+
+export PATH="$PATH:~/.local/bin"
+export PATH=$HOME/.local/bin:$PATH
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
